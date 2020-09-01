@@ -1,5 +1,5 @@
 # PyTorch-YOLOv3-deepso
-A minimal PyTorch implementation of YOLOv3, with support for training, inference and evaluation. You can get the additional information from: https://github.com/eriklindernoren/PyTorch-YOLOv3
+A minimal PyTorch implementation of YOLOv3, with support for training, inference and evaluation. You can get the additional information from original repo: https://github.com/eriklindernoren/PyTorch-YOLOv3
 
 ## Installation
 ##### Clone and install requirements

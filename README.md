@@ -16,6 +16,8 @@ Run the commands below to create a custom model definition, replacing `<num-clas
 $ cd config/                                # Navigate to config dir
 $ bash create_custom_model.sh <num-classes> # Will create custom model 'yolov3-custom.cfg'
 ```
+For deepso, since we have only one class, run
+    $ bash create_custom_model.sh 1
 
 #### Classes
 Add class names to `data/custom/classes.names`. This file should have one row per class name.
@@ -30,7 +32,7 @@ Move deepso dataset to 'data/custom/'. Before running 'deepso2yolo.py', make sur
 
 
 #### Test
-Evaluates the pretrained model on validation set.
+Evaluates the pretrained model on validation set. You can download pretrained model (img_size = 256) from here : https://drive.google.com/file/d/1eB3qwLosiLGO35_cFw9S6UIh_wPtpwqJ/view?usp=sharing and the model expect the pretrained weight is stored in 'weights/deepso.pth'.
     $ python3 test.py --model_def config/yolov3-custom.cfg --data_config config/custom.data --img_size 256 --weights_path weights/deepso.pth
 
 #### Train

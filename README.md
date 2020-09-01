@@ -1,13 +1,17 @@
 # PyTorch-YOLOv3-deepso
 A minimal PyTorch implementation of YOLOv3, with support for training, inference and evaluation. You can get the additional information from original repo: https://github.com/eriklindernoren/PyTorch-YOLOv3
 
+
 ## Installation
+
 ##### Clone and install requirements
     $ git clone https://github.com/mozzi7428/PyTorch-YOLOv3.git
     $ cd PyTorch-YOLOv3/
     $ sudo pip3 install -r requirements.txt
 
+
 ## Preparation for deepso
+
 
 #### Custom model
 Run the commands below to create a custom model definition, replacing `<num-classes>` with the number of classes in your dataset.
@@ -17,7 +21,9 @@ $ cd config/                                # Navigate to config dir
 $ bash create_custom_model.sh <num-classes> # Will create custom model 'yolov3-custom.cfg'
 ```
 For deepso, since we have only one class, run
-    $ bash create_custom_model.sh 1
+```
+$ bash create_custom_model.sh 1
+```
 
 #### Classes
 Add class names to `data/custom/classes.names`. This file should have one row per class name.
@@ -27,13 +33,17 @@ Move deepso dataset to 'data/custom/'. Before running 'deepso2yolo.py', make sur
 1) Rename and "move"(not copying) all the images to 'data/custom/images/'. 
 2) Reform and copy all the annotations to 'data/custom/labels/'. Information of 'data/custom/images/[image_name].jpg' will be stored in 'data/custom/labels/[image_name].txt'. Each row in the annotation file should define one bounding box, using the syntax `label_idx x_center y_center width height`. The coordinates should be scaled `[0, 1]`, and the `label_idx` should be zero-indexed and correspond to the row number of the class name in `data/custom/classes.names`.
 3) Add paths to images in 'data/custom/train.txt' and 'data/custom/valid.txt'
-    $ cd data/custom/
-    $ python deepso2yolo.py
 
+```
+$ cd data/custom/
+$ python deepso2yolo.py
+```
 
 #### Test
 Evaluates the pretrained model on validation set. You can download pretrained model (img_size = 256) from here : https://drive.google.com/file/d/1eB3qwLosiLGO35_cFw9S6UIh_wPtpwqJ/view?usp=sharing and the model expect the pretrained weight is stored in 'weights/deepso.pth'.
-    $ python3 test.py --model_def config/yolov3-custom.cfg --data_config config/custom.data --img_size 256 --weights_path weights/deepso.pth
+```
+$ python3 test.py --model_def config/yolov3-custom.cfg --data_config config/custom.data --img_size 256 --weights_path weights/deepso.pth
+```
 
 #### Train
 ```

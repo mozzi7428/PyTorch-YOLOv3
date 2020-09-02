@@ -3,6 +3,16 @@ import glob
 import json
 import numpy as np
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--kth_images", type=int, default=10, help="Use 1/k of total images to train and validate")
+parser.add_argument("--train_ratio", type=float, default=0.8, help="train:val = ratio : 1-ratio")
+opt = parser.parse_args()
+print(opt)
+
+print(opt.kth_images)
+print(opt.train_ratio)
 
 if not os.path.exists('./images'):
     os.mkdir('./images')
@@ -71,8 +81,8 @@ for key in image_dict:
 label_fnames = glob.glob('./labels/*.txt')
 label_fnames = np.sort(label_fnames)
 
-k=10            # Use 1/k of total images
-ratio = 0.8     # train:val = ratio : 1-ratio
+k = opt.kth_images			# Use 1/k of total images
+ratio = opt.train_ratio		# train:val = ratio : 1-ratio
 
 label_fnames = [label_fnames[i*k] for i in range(len(label_fnames)//k)]
 

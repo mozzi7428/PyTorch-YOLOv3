@@ -12,7 +12,6 @@ A minimal PyTorch implementation of YOLOv3, with support for training, inference
 
 ## Preparation for deepso
 
-
 #### Custom model
 Run the commands below to create a custom model definition, replacing `<num-classes>` with the number of classes in your dataset.
 
@@ -29,10 +28,19 @@ $ bash create_custom_model.sh 1
 Add class names to `data/custom/classes.names`. This file should have one row per class name.
 
 #### Dataset
-Move deepso dataset to 'data/custom/'. Before running `deepso2yolo.py`, make sure that 1) All the images are placed in a form of `data/pedestrian/image/[vidio_name]/frames_XX.jpg`. 2) All the annotation files are placed in a form of `data/pedestrian/label/[vidio_name]-labels.json`. If the dataset is ready, run `deepso2yolo.py`. This single line will: 
+Move deepso dataset to 'data/custom/'. Before running `deepso2yolo.py`, make sure that 
+1) All the images are placed in a form of `data/pedestrian/image/[vidio_name]/frames_XX.jpg`. 
+2) All the annotation files are placed in a form of `data/pedestrian/label/[vidio_name]-labels.json`. 
+
+If the dataset is ready, run
+```
+$ deepso2yolo.py --kth_images [k] --train_ratio [ratio]
+```
+Then you will use `1/[k]` of total images to train and validate the model, with dataset splitted into #train_images : #validation_images = `[ratio]` : 1-`[ratio]`. The default values of `[k]` and `[ratio]` are 10 and 0.8, respectively. The single line above will: 
 1) Rename and "move"(not copying) all the images to `data/custom/images/`. 
 2) Reform and copy all the annotations to `data/custom/labels/`. Information of `data/custom/images/[image_name].jpg` will be stored in `data/custom/labels/[image_name].txt`. Each row in the annotation file should define one bounding box, using the syntax `label_idx x_center y_center width height`. The coordinates should be scaled `[0, 1]`, and the `label_idx` should be zero-indexed and correspond to the row number of the class name in `data/custom/classes.names`.
-3) Add paths to images in `data/custom/train.txt` and `data/custom/valid.txt`
+3) Add paths to images in `data/custom/train.txt` and `data/custom/valid.txt`.
+
 
 ```
 $ cd data/custom/
@@ -40,7 +48,7 @@ $ python deepso2yolo.py
 ```
 
 #### Test
-Evaluates the pretrained model on validation set. You can download pretrained model (img_size = 256) from here : https://drive.google.com/file/d/1eB3qwLosiLGO35_cFw9S6UIh_wPtpwqJ/view?usp=sharing and the model expect the pretrained weight is stored in `weights/deepso.pth`.
+Evaluate the Darknet-53 backend pretrained model on validation set. The model is trained with 1/10 of total deepso dataset with image size of 256. You can download pretrained weights from here : https://drive.google.com/file/d/1eB3qwLosiLGO35_cFw9S6UIh_wPtpwqJ/view?usp=sharing and the model expect the weights be stored in `weights/deepso.pth`.
 ```
 $ python3 test.py --model_def config/yolov3-custom.cfg --data_config config/custom.data --img_size 256 --weights_path weights/deepso.pth
 ```

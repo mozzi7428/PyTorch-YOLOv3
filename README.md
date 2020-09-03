@@ -47,13 +47,26 @@ $ cd data/custom/
 $ python deepso2yolo.py
 ```
 
-#### Test
-Evaluate the Darknet-53 backend pretrained model on validation set. The model is trained with 1/10 of total deepso dataset with image size of 256. You can download pretrained weights from here : https://drive.google.com/file/d/1eB3qwLosiLGO35_cFw9S6UIh_wPtpwqJ/view?usp=sharing and the model expect the weights be stored in `weights/deepso.pth`.
+## Test
+```
+$ test.py [-h] [--batch_size BATCH_SIZE] [--model_def MODEL_DEF]
+               [--data_config DATA_CONFIG] [--weights_path WEIGHTS_PATH]
+               [--class_path CLASS_PATH] [--iou_thres IOU_THRES]
+               [--conf_thres CONF_THRES] [--nms_thres NMS_THRES]
+               [--n_cpu N_CPU] [--img_size IMG_SIZE]
+```
+#### Pretrained model (deepso)
+You can download Darknet-53 backend pretrained weights from here : https://drive.google.com/file/d/1eB3qwLosiLGO35_cFw9S6UIh_wPtpwqJ/view?usp=sharing. The model is trained with 1/10 of total training images from deepso dataset with image size of 256. The average precision(AP) from 1/10 of total validation images from deepso datate was 0.848. Following command expects the downdloaded weights be stored in `weights/deepso.pth`. 
+
 ```
 $ python3 test.py --model_def config/yolov3-custom.cfg --data_config config/custom.data --img_size 256 --weights_path weights/deepso.pth
+Detecting objects: 100%|██████████████████████| 359/359 [02:12<00:00,  2.71it/s]
+Computing AP: 100%|███████████████████████████████| 1/1 [00:00<00:00, 51.77it/s]
+Average Precisions:
++ Class '0' (pedestrian) - AP: 0.8481185498238566
 ```
 
-#### Train
+## Train
 ```
 $ train.py [-h] [--epochs EPOCHS] [--batch_size BATCH_SIZE]
                 [--gradient_accumulations GRADIENT_ACCUMULATIONS]
